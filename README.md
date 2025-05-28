@@ -22,7 +22,7 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 - **Frontend**:
   - `Thymeleaf`: Motor de template utilizado para renderizar dados do backend no frontend.
   - `HTML, CSS e JavaScript`: Para construir e estilizar a interface do usuário.
-  - `Power BI`: Biblioteca para criação de gráficos dinâmicos exibindo dados do sistema.
+  - `Charts.js`: Biblioteca para criação de gráficos dinâmicos exibindo dados do sistema.
 - **Banco de Dados**:
   - `PostgreSQL`: Sistema de gerenciamento de banco de dados relacional.
   - `PostgreSQL Driver`: Para conexão entre a aplicação e o banco de dados.
