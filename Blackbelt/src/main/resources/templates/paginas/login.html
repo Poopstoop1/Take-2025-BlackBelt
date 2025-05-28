@@ -20,16 +20,14 @@
         <div class="input-group">
           <input type="password" id="password" name="password" placeholder="Digite sua Senha" required />
           <div th:if="${param.error}" class="error-message">
-            Login ou senha incorretos. Tente novamente.
+           	Email ou Senha incorretos. Tente novamente.
           </div>
         </div>
 
-        <form action="/login" method="post">
-           <button class="login-button" type="submit">Login</button>
-        </form>
-        
-       <p class="esqueceusenha"> <a th:href="@{/recuperar-senha}">Esqueceu sua senha?</a></p>
+        <button class="login-button" type="submit">Login</button>
 
+      </form>
+      <p class="esqueceusenha"> <a href="http://localhost:8080/esquecersenha">Esqueceu sua senha?</a></p>
       <div th:if="${param.success}" class="success-message">
         Login realizado com sucesso! Redirecionando...
         <meta http-equiv="refresh" content="4;url=/" />

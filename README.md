@@ -95,8 +95,8 @@ Antes de configurar o ambiente, é necessário obter o código-fonte do projeto 
            2. Vá na aba Extensions (ícone de quadradinho do lado esquerdo ou `Ctrl+Shift+X`).
            3. Procure por **Extension Pack for Java** e clique em **Install**.
 
-        - Instale a Extensão Java também no VScode.
-          
+      - Instale a Extensão Java também no VScode.
+
       2. **Abrir o Projeto**:
 
          1. Clique em File > Open Folder... ou use o atalho `Ctrl+K, Ctrl+O`.
@@ -132,12 +132,29 @@ Antes de configurar o ambiente, é necessário obter o código-fonte do projeto 
     spring.datasource.url=jdbc:postgresql://localhost:5432/nome_do_banco
     spring.datasource.username=seu_usuario
     spring.datasource.password=sua_senha
+    spring.mail.username=seu_email
+    spring.mail.password=seu_password
     ```
 
     - Substitua:
+
       - `nome_do_banco`: pelo nome do banco de dados que você criou.
       - `seu_usuario:` pelo nome do usuário do PostgreSQL.
       - `sua_senha`: pela senha do usuário.
+      - `seu_email`: por um email para enviar email de recuperação de senha
+      - `sua_senha`: senha gerada pelo google apenas para enviar email
+
+    - **Como criar uma senha de aplicativo no Gmail apenas para enviar email**
+
+    1. **Acesse as configurações da sua Conta do Google**: Vá para https://myaccount.google.com/ e faça login na sua conta.
+
+    2. **Vá para a seção de Segurança**: No menu à esquerda, clique em "Segurança".
+    3. **Encontre a opção de Verificação em duas etapas**: Role para baixo e procure por "Como você faz login no Google" e clique em "Verificação em duas etapas".
+    4. **Ative a verificação em duas etapas**: Se não estiver ativada, siga as instruções para ativá-la (geralmente exige que você insira um número de telefone para receber um código SMS).
+    5. **Crie a senha de aplicativo**: Após ativar a verificação em duas etapas, você verá a opção de criar uma senha de aplicativo. Clique nela.
+    6. **Escolha um nome para a senha**: Você pode dar um nome descritivo à senha para facilitar a sua identificação, como "Gmail para aplicativo".
+    7. **Gerar a senha**: A Google irá gerar uma senha aleatória e você poderá copiá-la para uso posterior.
+    8. **Armazene a senha em um local seguro**: Guarde a senha de aplicativo em um local seguro, pois ela será necessária para autenticar com o Gmail em outros aplicativos.
 
   - **Verificar a configuração do driver**:
 
@@ -165,7 +182,7 @@ Após concluir a configuração do projeto e do ambiente, siga os passos abaixo 
 
 1. **Abra o arquivo principal da aplicação:**
 
-   - Navegue até o arquivo `MesaApplication.java` localizado em `src/main/java/.....`.
+   - Navegue até o arquivo `BlackBeltApplication.java` localizado em `src/main/java/.....`.
    - Esse é o arquivo principal que inicia a aplicação.
 
 2. **Execute a aplicação:**
@@ -211,7 +228,7 @@ Para acessar a aplicação, é necessário fazer login em uma conta. Ao iniciar 
   O **Administrador** tem acesso aos dados de todas as vulnerabilidades. Ele pode adicionar, editar e excluir empresas, além de gerenciar usuários. Ou seja, é o administrador quem adiciona, edita e exclui os usuários do sistema.
 
   ```bash
-  login: AirtonRibeiro
+  login: AirtonRibeiro@hotmail.com
   senha: 1234
   ```
 
@@ -220,7 +237,7 @@ Para acessar a aplicação, é necessário fazer login em uma conta. Ao iniciar 
   Os Gestores têm acesso apenas aos dados de suas respectivas filiais. Eles podem visualizar as informações e adicionar correções as vulnerabilidades.
 
   ```bash
-  login: GabrielLima
+  login: GabrielLima@gmail.com
   Senha: 1234
 
   ```
@@ -275,9 +292,78 @@ Caso você tenha encontrado um problema, por favor, siga as etapas abaixo para r
 
 1. **Verifique se o problema já foi reportado**: Consulte as issues abertas no repositório para verificar se alguém já relatou o mesmo problema.
 2. **Crie uma nova issue**: Caso o problema ainda não tenha sido reportado, abra uma nova issue detalhando o problema. Seja claro sobre os passos para reproduzir o erro e forneça detalhes como:
+
    - O que você estava tentando fazer.
    - O erro ou comportamento inesperado.
    - Mensagens de erro, se houver.
+
+## 🧱 Estrutura do Projeto
+
+```txt
+blackbelt/
+├── .gitignore
+├── README.md
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── project/
+│       │           └── blackbelt/
+│       │               ├── BlackbeltApplication.java
+│       │               ├── controller/
+│       │               │   ├── DashboardController.java
+│       │               │   ├── EmpresaController.java
+│       │               │   ├── LoginController.java
+│       │               │   ├── RecuperacaoController.java
+│       │               │   └── UsuarioController.java
+│       │               ├── model/
+│       │               │   ├── Documento.java
+│       │               │   ├── Empresa.java
+│       │               │   └── Users.java
+│       │               ├── repository/
+│       │               │   ├── DocumentoRepository.java
+│       │               │   ├── EmpresaRepository.java
+│       │               │   └── UserRepository.java
+│       │               ├── security/
+│       │               │   ├── WebSecurityConfig.java
+│       │               │   └── SecurityDataBaseService.java
+│       │               └── service/
+│       │                   ├── EmailService.java
+│       │                   └── RecuperacaosenhaService.java
+│       └── resources/
+│           ├── static/
+│           │   ├── img/
+│           │   │   └── blackbeltlogo.png
+│           │   ├── js/
+│           │   │   ├── dashboard.js
+│           │   │   ├── gestaodeempresas.js
+│           │   │   └── gestaodeusuarios.js
+│           │   ├── dashboard.css
+│           │   ├── gestaodeempresas.css
+│           │   ├── gestaodeusuarios.css
+│           │   ├── login.css
+│           │   └── recuperacao.css
+│           ├── templates/
+│           │   ├── paginas/
+│           │   │    ├── gestaodeempresas.html
+│           │   │    ├── gestaodeusuarios.html
+│           │   │    ├── login.html
+│           │   │    ├── recuperar-senha.html
+│           │   │    └── redefinir-senha.html
+│           │   └── dashboard.html
+│           └── application.properties
+└── src/
+    └── test/
+        └── java/
+            └── com/
+                └── project/
+                    └── blackbelt/
+                        └── BlackbeltApplicationTests.java
+
+```
 
 ## 8. Agradecimentos
 

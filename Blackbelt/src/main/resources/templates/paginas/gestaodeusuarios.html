@@ -37,7 +37,6 @@
       <!-- Conteúdo principal da home aqui -->
 
 
-      <button id="openPopup" class="button-campanha">Adicionar Usuários</button>
 
       <div id="popup" class="popup">
         <div class="popup-content">
@@ -49,6 +48,8 @@
             <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" style="color:red"></p>
             <label>Senha</label>
             <input class="inp" type="password" name="password" th:field="*{password}" required>
+             <label>Nome</label>
+            <input class="inp" name="nome" th:field="*{nome}" required>    
             <label>Cargo</label>
             <input class="inp" name="cargo" th:field="*{cargo}" required>
             <label>Permissao</label>
@@ -64,39 +65,55 @@
       </div>
 
       <h1 class="title-upload">Usuários</h1>
-
+	 
+	  <div class="usuarioHeader">
       <p class="last-upload">Lista de Usuarios:</p>
-      <table>
+      <button id="openPopup" class="button-campanha">Adicionar Usuários</button>
+      </div>
+      <table id="document-table">
         <thead>
           <tr>
             <th>Email</th>
-            <th>Senha</th>
+
+            <th>Nome</th>
             <th>Cargo</th>
             <th>Permissao</th>
             <th>Empresa CNPJ</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="user : ${usuarios}">
-            <td th:text="${user.login}">Daniel.026@hotmail.com</td>
-            <td th:text="${user.password}">12345</td>
-            <td th:text="${user.cargo}">aaaaa</td>
-            <td th:text="${user.permissao}">sadsadsa</td>
-            <td th:text="${user.cnpjEmpresa}">sadsad</td>
+            <td th:text="${user.login}"></td>
+            <td th:text="${user.nome}"></td>
+            <td th:text="${user.cargo}"></td>
+            <td th:text="${user.permissao}"></td>
+            <td th:text="${user.cnpjEmpresa}"></td>
             <td>
               <a href="javascript:void(0);" th:attr="data-id=${user.id}, 
              data-login=${user.login}, 
-             data-password=${user.password},
+             data-nome=${user.nome},
              data-cargo=${user.cargo},
              data-permissao=${user.permissao},
              data-empresa=${user.cnpjEmpresa}" onclick="openEditPopup(this)">Editar</a>
+             
+             
               <a th:href="@{/removerusuario/{idusuario}(idusuario=${user.id})}">Excluir</a>
+              
+              
             </td>
           </tr>
 
 
         </tbody>
       </table>
+      
+      <div id="pagination-controls" style="margin-top: 10px;">
+  <button id="prev-page">Anterior</button>
+  <span id="page-info"></span>
+  <button id="next-page">Próximo</button>
+</div>
+      
 
       <div id="popupEdit" class="popup">
         <div class="popup-content">
@@ -108,8 +125,10 @@
             <input type="text" id="editId" name="id" readonly>
             <label for="editLogin">Email</label>
             <input type="email" id="editLogin" name="login" required>
-            <label for="editPassword">Senha</label>
+            <label for="editPassword">Senha</label>      
             <input type="text" id="editPassword" name="password" required>
+            <label for="editNome">Nome</label>
+            <input type="text" id="editNome" name="nome" required>
             <label for="editCargo">Cargo</label>
             <input type="text" id="editCargo" name="cargo" required>
             <label for="editPermissao">Permissão</label>

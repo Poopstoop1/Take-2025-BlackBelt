@@ -12,15 +12,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 
 /**
- * Classe Documento da aplicação Blackbelt para injetar dados da planilha.
- * <p>
- * Data de criação: 02-09-2025
- * </p>
+ * Entidade Documento com seus atributos para 
+ * armazenar dados da planilha.
+ * 
+ * Data de criação: 08-04-2025
+ * 
  * @author Poopstoop1 - Paulo Daniel
  * @version 1.0
- * @since Java 21
- * 
- * */
+ * @since Java 21 (JDK 21)
+ */
 @Entity
 public class Documento implements Serializable {
 

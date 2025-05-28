@@ -16,42 +16,70 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Controlador responsável pela gestão de usuários, incluindo listagem, cadastro, edição e exclusão.
+ * 
+ * <p>
+ * Data de criação: 07-04-2025
+ * </p>
+ * 
+ * @author Poopstoop1 - Paulo Daniel
+ * @version 1.0
+ * @since Java 21 (JDK 21)
+ */
+
 @Controller
 public class UsuarioController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
 
+
+    /**
+     * Exibe a página de gestão de usuários com a lista completa e o nome do usuário autenticado.
+     * 
+     * @param model Objeto Model usado para passar atributos à view.
+     * @return Caminho da view "/paginas/gestaodeusuarios".
+     */
 	@RequestMapping("/usuarios")
 	public String user(Model model){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
+		Users usua = userRepository.findByUsername(username);
 
-
+		//Coloca nome do usuario no header
 		if(username != null){
-			String nomeFormatado = formatarNome(username);
-			model.addAttribute("message", nomeFormatado);
+			model.addAttribute("message", usua.getNome());
 		}
+		
+		// Coloca nome de usuario na tabela
 		 model.addAttribute("usuarios", userRepository.findAll());
+		 
+		 // Instância para criar um usuario
 		model.addAttribute("usuarioobj", new Users());
+		
 		return "/paginas/gestaodeusuarios";
 	}
 
-	private String formatarNome(String username) {
-		// Divide o nome em letras maiúsculas e minúsculas
-		// Exemplo: "ErysonMoreira" -> "Eryson Moreira"
-		return username.replaceAll("([a-z])([A-Z])", "$1 $2");
-	}
 	
-	
+	 /**
+     * Salva um novo usuário no banco de dados.
+     * 
+     * @param usuario Objeto do tipo Users preenchido a partir do formulário.
+     * @return Redireciona para a página de gestão de usuários.
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/salvarusuarios")
     public String salvar(@ModelAttribute Users usuario) {
     	
         userRepository.save(usuario);
         return "redirect:/usuarios";
     }
-    
+    /**
+     * Edita os dados de um usuário já existente no banco de dados.
+     * 
+     * @param user Objeto Users com os novos dados a serem atualizados.
+     * @return Redireciona para a página de gestão de usuários.
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/editarusuarios")
 	 public ModelAndView editarFilial(@ModelAttribute Users user) {
 	     // Busca a filial pelo CNPJ
@@ -63,6 +91,7 @@ public class UsuarioController {
 	         existente.setLogin(user.getLogin());
 	         existente.setPassword(user.getPassword());
 	         existente.setCargo(user.getCargo());
+	         existente.setNome(user.getNome());
 	         existente.setPermissao(user.getPermissao());
 	         existente.setEmpresa(user.getEmpresa());
 	         
@@ -75,7 +104,12 @@ public class UsuarioController {
 	     // Redireciona para a página de gestão de filiais
 	     return new ModelAndView("redirect:/usuarios");
 	 }
-
+		/**
+     * Remove um usuário do banco de dados com base no ID fornecido.
+     * 
+     * @param idusuario ID do usuário a ser excluído.
+     * @return Redireciona para a página de gestão de usuários.
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/removerusuario/{idusuario}")
     public String excluir(@PathVariable("idusuario") Long idusuario) {
         userRepository.deleteById(idusuario);

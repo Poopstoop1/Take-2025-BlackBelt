@@ -1,7 +1,5 @@
 package com.project.Blackbelt;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +45,6 @@ public class BlackbeltApplication {
 	@Autowired
 	 private EmpresaRepository filialRepository;
 	 
-	 @Autowired
-	 private UserRepository usuario;
 	 
 	 /*
 	 @Autowired
@@ -77,11 +73,11 @@ public class BlackbeltApplication {
 	    public CommandLineRunner commandLineRunner(UserRepository userRepository) {
 	        return args -> {
 	        	/*sequenciaInicial();*/
-	        	criarFilialSeNaoExistir(filialRepository, "666666666.0001-66", "BlackBelt", "BlackBelt LTDA");
-	        	criarFilialSeNaoExistir(filialRepository, "444444444.0001-44", "CyberSensei", "CyberSensei LTDA");
+	        	criarEmpresaSeNaoExistir(filialRepository, "666666666.0001-66", "BlackBelt", "BlackBelt LTDA");
+	        	criarEmpresaSeNaoExistir(filialRepository, "444444444.0001-44", "CyberSensei", "CyberSensei LTDA");
 
-				criarUsuarioSeNaoExistir(userRepository, "GabrielLima", "Gestor", "444444444.0001-44", "1234","Usuario");
-				criarUsuarioSeNaoExistir(userRepository, "AirtonRibeiro", "Administrador", "666666666.0001-66", "1234","Admin");
+				criarUsuarioSeNaoExistir(userRepository, "GabrielLima@gmail.com", "Gestor","Gabriel Lima", "444444444.0001-44", "1234","Usuario");
+				criarUsuarioSeNaoExistir(userRepository, "AirtonRibeiro@hotmail.com", "Administrador", "AirtonRibeiro" ,"666666666.0001-66", "1234","Admin");
 			
 		
 	        };
@@ -96,7 +92,7 @@ public class BlackbeltApplication {
 	     * @param senha Senha do usuário.
 	     */
 	 
-	 private void criarUsuarioSeNaoExistir(UserRepository userRepository, String login, String cargo, String cnpjEmpresa, String senha, String permissao) {
+	 private void criarUsuarioSeNaoExistir(UserRepository userRepository, String login, String cargo,String nome, String cnpjEmpresa, String senha, String permissao) {
 		 Optional<Empresa> empresa = filialRepository.findById(cnpjEmpresa);  // Busca a filial pelo nome
 		    if (empresa.isPresent()) {  // Verifica se a filial existe
 		        Users user = userRepository.findByUsername(login);
@@ -104,6 +100,7 @@ public class BlackbeltApplication {
 		            Users novoUsuario = new Users();
 		            novoUsuario.setLogin(login);
 		            novoUsuario.setCargo(cargo);
+		            novoUsuario.setNome(nome);
 		            novoUsuario.setEmpresa(empresa.get());
 		            novoUsuario.setPassword(senha); 
 		            novoUsuario.setPermissao(permissao);
@@ -117,13 +114,13 @@ public class BlackbeltApplication {
 		}
 	 
 	 	/**
-	     * Cria uma filial no sistema se ela ainda não existir.
+	     * Cria uma Empresa no sistema se ela ainda não existir.
 	     *
 	     * @param cnpj CNPJ da filial.
 	     * @param nome Nome da filial.
 	     * @param razaosocial Razão social da filial.
 	     */
-	 private void criarFilialSeNaoExistir(EmpresaRepository filialrepository, String cnpj, String nome, String razaosocial) {
+	 private void criarEmpresaSeNaoExistir(EmpresaRepository filialrepository, String cnpj, String nome, String razaosocial) {
 			Optional<Empresa> filial = filialrepository.findById(cnpj);
 			if (filial.isEmpty()) {
 				Empresa novofilial = new Empresa();

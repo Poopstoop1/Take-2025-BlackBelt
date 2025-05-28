@@ -1,4 +1,5 @@
 package com.project.Blackbelt.Model;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -14,14 +15,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
 
 /**
- * Classe Users da aplicação Blackbelt .
+ * Entidade Users da aplicação Blackbelt .
  * <p>
- * Data de criação: 02-04-2025
+ * Data de criação: 08-04-2025
  * </p>
  * @author Poopstoop1 - Paulo Daniel
  * @version 1.0
@@ -41,10 +40,17 @@ public class Users implements UserDetails {
 	private String login;
 	@Column(name = "password",nullable = false,length = 16)
 	private String password;
+	@Column(nullable = false,length = 100)
+	private String nome;
+	
 	@Column(name = "cargo",nullable = false,length = 40)
 	private String cargo;
 	@Column(name = "permissao",nullable = false)
 	private String permissao;
+	@Column(name = "tokenRecuperacaoSenha", nullable = true)
+	private String tokenRecuperacaoSenha;
+	@Column(name = "tokenExpiracao", nullable = true)
+    private LocalDateTime tokenExpiracao;
 	
 	@ManyToOne
 	@JoinColumn(name = "cnpj_empresa", referencedColumnName = "cnpj")
@@ -56,6 +62,30 @@ public class Users implements UserDetails {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+	
+	public String getTokenRecuperacaoSenha() {
+		return tokenRecuperacaoSenha;
+	}
+
+	public void setTokenRecuperacaoSenha(String tokenRecuperacaoSenha) {
+		this.tokenRecuperacaoSenha = tokenRecuperacaoSenha;
+	}
+
+	public LocalDateTime getTokenExpiracao() {
+		return tokenExpiracao;
+	}
+
+	public void setTokenExpiracao(LocalDateTime tokenExpiracao) {
+		this.tokenExpiracao = tokenExpiracao;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getLogin() {

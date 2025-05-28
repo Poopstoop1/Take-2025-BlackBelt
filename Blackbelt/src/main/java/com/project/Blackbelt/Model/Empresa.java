@@ -11,12 +11,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+
+/**
+ * Entidade Empresa
+ * 
+ * Data de criação: 08-04-2025
+ * 
+ * @author Poopstoop1 - Paulo Daniel
+ * @version 1.0
+ * @since Java 21 (JDK 21)
+ */
 @Entity
 public class Empresa implements Serializable{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id

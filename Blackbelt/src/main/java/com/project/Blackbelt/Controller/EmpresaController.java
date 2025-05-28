@@ -14,8 +14,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.Blackbelt.Model.Empresa;
+import com.project.Blackbelt.Model.Users;
 import com.project.Blackbelt.Repository.EmpresaRepository;
+import com.project.Blackbelt.Repository.UserRepository;
 
+/**
+ * Controlador responsável pela gestão de empresas no sistema Blackbelt.
+ *
+ * Permite visualizar, cadastrar, editar e excluir filiais (empresas).
+ * 
+ * Data de criação: 09-04-2025
+ * 
+ * @author Poopstoop1 - Paulo Daniel
+ * @version 1.0
+ * @since Java 21 (JDK 21)
+ */
 
 @Controller
 public class EmpresaController {
@@ -23,28 +36,45 @@ public class EmpresaController {
 	@Autowired
 	private EmpresaRepository filialrepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+
+	  /**
+     * Exibe a página de gestão de empresas com as filiais cadastradas.
+     * 
+     * @param model Objeto {@link Model} para adicionar atributos à página.
+     * @return Caminho da view "/paginas/gestaodeempresas".
+     */
+	
 	@RequestMapping("/empresa")
 	public String filial(Model model) {	
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 		String username = auth.getName();
+		// Busca usuario pelo nome
+		Users usua = userRepository.findByUsername(username);
 
-
+		// atribui o nome do usuario ao Header
 		if(username != null){
-			String nomeFormatado = formatarNome(username);
-			model.addAttribute("message", nomeFormatado);
+			model.addAttribute("message", usua.getNome());
 		}
+
 		model.addAttribute("filialobj", new Empresa());
+		//Busco as empresas
 		Iterable<Empresa> filiais = filialrepository.findAll();
-        model.addAttribute("filiais", filiais);
+			// Onde coloco todas as empresas e jogo para tabela de empresas no front.
+     model.addAttribute("filiais", filiais);
+
 		return "/paginas/gestaodeempresas";
 	}
 	
-	private String formatarNome(String username) {
-		// Divide o nome em letras maiúsculas e minúsculas
-		// Exemplo: "ErysonMoreira" -> "Eryson Moreira"
-		return username.replaceAll("([a-z])([A-Z])", "$1 $2");
-	}
-	
+	 /**
+     * Salva uma nova empresa no banco de dados.
+     * 
+     * @param filiais Objeto {@link Empresa} contendo os dados da nova empresa.
+     * @return Redireciona para "/empresa" após o salvamento.
+     */
 	
 	 @RequestMapping(method = RequestMethod.POST, value = "/salvarfiliais")
 	    public ModelAndView salvar(@ModelAttribute Empresa filiais) {
@@ -53,6 +83,12 @@ public class EmpresaController {
 	        return modelview;
 	    }
 
+			 /**
+     * Edita uma empresa existente no banco de dados.
+     * 
+     * @param filial Objeto {@link Empresa} com os dados atualizados.
+     * @return Redireciona para "/empresa" após a atualização.
+     */
 	 @RequestMapping(method = RequestMethod.POST, value = "/editarfilial")
 	 public ModelAndView editarFilial(@ModelAttribute Empresa filial) {
 	     // Busca a filial pelo CNPJ
@@ -74,6 +110,12 @@ public class EmpresaController {
 	     return new ModelAndView("redirect:/empresa");
 	 }
 
+	  /**
+     * Exclui uma Empresa do banco de dados com base no CNPJ.
+     * 
+     * @param cnpj CNPJ da empresa a ser removida.
+     * @return Redireciona para "/empresa" após a exclusão.
+     */
 	    @RequestMapping(method = RequestMethod.GET, value = "/removerfilial/{cnpjfilial}")
 	    public ModelAndView excluir(@PathVariable("cnpjfilial") String cnpj) {
 	        filialrepository.deleteById(cnpj);

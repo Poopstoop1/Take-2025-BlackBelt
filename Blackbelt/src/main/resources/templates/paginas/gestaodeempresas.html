@@ -35,7 +35,6 @@
     </aside>
 
     <section class="content">
-      <button id="openPopup" class="button-campanha">Adicionar Filial</button>
 
       <!-- Estrutura do pop-up -->
       <div id="popup" class="popup">
@@ -60,18 +59,22 @@
 
       <div class="upload-section">
         <h1 class="title-upload">Gestão de Empresas</h1>
+        <div class="empresaHeader">
         <p class="last-upload">Lista de Empresas:</p>
+      <button id="openPopup" class="button-campanha">Adicionar Filial</button>
+      </div>
 
         <!-- Retirar essa classe no css e talvez js
           <p class="history-upload">Histórico de uploads</p>
           -->
 
-        <table>
+        <table id="document-table">
           <thead>
             <tr>
               <th>CNPJ</th>
               <th>Nome</th>
               <th>Razão Social</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -90,6 +93,12 @@
 
           </tbody>
         </table>
+             <!-- Controles de paginação -->
+<div id="pagination-controls" style="margin-top: 10px;">
+  <button id="prev-page">Anterior</button>
+  <span id="page-info"></span>
+  <button id="next-page">Próximo</button>
+</div>
 
         <div id="popupEdit" class="popup">
           <div class="popup-content">
