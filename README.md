@@ -242,6 +242,13 @@ Para acessar a aplicação, é necessário fazer login em uma conta. Ao iniciar 
 
   ```
 
+### Implantar Arquivo CSV
+**Como implantar os arquivos CSV e o que necessita?**
+
+1. Para implantar arquivos CSV é necessário que o arquivo esteja em csv utf-8.
+2. É necessario que na segunda coluna da planilha tenha o nome da empresa ou ativo.
+3. É preciso criar no sistema o mesmo nome da empresa com as mesmas caracteristicas maisculo ou minusculo;
+
 ## Testes Recomendados
 
 Para testar a aplicação, recomendamos que você tente realizar algumas alterações como **Administrador**, como:
