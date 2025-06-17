@@ -27,7 +27,8 @@ O projeto foi desenvolvido com as seguintes tecnologias:
   - `PostgreSQL`: Sistema de gerenciamento de banco de dados relacional.
   - `PostgreSQL Driver`: Para conexão entre a aplicação e o banco de dados.
 - **Infraestrutura**:
-  - `Railway`: Plataforma utilizada para o deploy da aplicação
+- - `Render`: Plataforma utilizada para o deploy do front-end e o back-end da aplicação.
+  - `Railway`: Plataforma utilizada para o deploy do PostgreSQL da aplicação.
 
 ## 3. Pré-requisitos
 
